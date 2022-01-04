@@ -8,22 +8,52 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+////DI 역할을 한다.
+//public class AppConfig {
+//
+//    // 생성자 주입(injection)
+//    public MemberService memberService(){
+//        return new MemberServiceImpl(memberRepository());
+//    }
+//
+//    public MemoryMemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
+//
+//    public OrderService orderService(){
+//        return new OrderServiceImpl(memberRepository(), discountPolicy());
+//    }
+//
+//    public DiscountPolicy discountPolicy(){
+////        return new FixDiscountPolicy();
+//        return new RateDiscountPolicy();
+//    }
+//}
+
+// Spring 으로 변환 (@configuration -> 애플리케이션의 설정 정보라는 의미)
+@Configuration
 public class AppConfig {
 
-    // 생성자 주입(injection)
+    // @bean 을 함으로써 스프링 컨테이너에 등록이 된다.
+    @Bean
     public MemberService memberService(){
         return new MemberServiceImpl(memberRepository());
     }
 
-    private MemoryMemberRepository memberRepository() {
+    @Bean
+    public MemoryMemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
+    @Bean
     public OrderService orderService(){
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
+    @Bean
     public DiscountPolicy discountPolicy(){
 //        return new FixDiscountPolicy();
         return new RateDiscountPolicy();
