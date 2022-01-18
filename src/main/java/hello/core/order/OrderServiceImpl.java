@@ -19,10 +19,22 @@ public class OrderServiceImpl implements OrderService{
 //    //dip 위반 사항 수정 -> dip 위반만 수정하면 코드가 돌아가지 못한다.
 //    private DiscountPolicy discountPolicy; // final은 값이 할당되어야 하므로 지운다.
 
-    private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
+    private MemberRepository memberRepository;
+    private DiscountPolicy discountPolicy;
 
-    @Autowired
+    @Autowired(required = false) // 수정자 주입(setter 주입)/ 주입할 대상이 없어도 동작하게 하려면 required = false
+    public void setMemberRepository(MemberRepository memberRepository){
+        System.out.println("memberRepository = " + memberRepository);
+        this.memberRepository = memberRepository;
+    }
+
+    @Autowired // 수정자 주입(setter 주입)
+    public void setDiscountPolicy(DiscountPolicy discountPolicy){
+        System.out.println("discountPolicy = " + discountPolicy);
+        this.discountPolicy = discountPolicy;
+    }
+
+    @Autowired // 생성자가 하나이기 때문에 @Autowired 를 생략해도 자동 주입이 될 수 있다.
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
